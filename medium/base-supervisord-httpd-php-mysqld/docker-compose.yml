@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    php:
+        image: whitehacksctfmedium_base-supervisord-httpd-php-mysqld
+        network_mode: host
+        restart: always
+        volumes:
+            - ./app:/var/www/localhost/htdocs/
+        ports:
+            - 80:80

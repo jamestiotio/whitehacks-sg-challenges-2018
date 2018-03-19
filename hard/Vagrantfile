@@ -1,0 +1,31 @@
+Vagrant.configure("2") do |config|
+  config.vm.define "WhiteHacks@SG'18 CTF Hard"
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "WhiteHacks@SG'18 CTF Hard"
+    vb.memory = "512"
+  end
+  config.vm.box = "envimation/ubuntu-xenial"
+  config.vbguest.auto_update = false unless config.vbguest.nil?
+  
+  config.vm.network "forwarded_port", guest: 8000, host: 8000
+
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install --no-install-recommends -qy curl python python-pip python-setuptools
+    curl https://get.docker.com | sh
+    pip install --no-cache-dir docker-compose
+    apt-get autoremove -qy
+    apt-get autoclean
+    apt-get clean
+    systemctl enable docker
+    systemctl start docker
+  
+    cp -a /vagrant /tmp/
+    cd /tmp/vagrant
+    docker-compose up -d
+    echo "WHITEHACKS{V3G@_ch@1_n0_kick_l@}" > /root/flag
+
+    NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+    echo "vagrant:WhiteHacks@SG'18_vagrant" | chpasswd
+  SHELL
+end

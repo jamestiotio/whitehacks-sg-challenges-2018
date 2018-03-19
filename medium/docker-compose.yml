@@ -1,0 +1,85 @@
+version: '3'
+
+services:
+    base-httpd:
+        build: base-httpd
+
+    base-httpd-php:
+        build: base-httpd-php
+
+    base-supervisord-httpd-php-mysqld:
+        build: base-supervisord-httpd-php-mysqld
+
+    robots:
+        build: robots
+        ports:
+            - "8081:80"
+        restart: always
+        read_only: true
+        tmpfs:
+            - /run/apache2
+            - /var/log/apache2
+
+    sourceful:
+        build: sourceful
+        ports:
+            - "8082:80"
+        restart: always
+        read_only: true
+        tmpfs:
+            - /run/apache2
+            - /var/log/apache2
+
+    shellshock:
+        build: shellshock
+        ports:
+            - "8083:80"
+        restart: always
+
+    pingpong:
+        build: pingpong
+        ports:
+            - "8084:80"
+        restart: always
+        read_only: true
+        tmpfs:
+            - /run/apache2
+            - /var/log/apache2
+
+    environmentally_friendly:
+        build: environmentally_friendly
+        ports:
+            - "8085:80"
+        restart: always
+
+    kuuki_hard_cmd_inject:
+        build: kuuki_hard_cmd_inject
+        ports:
+            - "8086:80"
+        restart: always
+        read_only: true
+        tmpfs:
+            - /run/apache2
+            - /var/log/apache2
+
+    javascript_auth:
+        build: javascript_auth
+        ports:
+            - "8087:80"
+        restart: always
+        read_only: true
+        tmpfs:
+            - /run/apache2
+            - /var/log/apache2
+
+    vsftpd:
+        build: vsftpd
+        ports:
+            - "8088:22"
+        restart: always
+
+    sqli:
+        build: sqli
+        ports:
+            - "8089:80"
+        restart: always

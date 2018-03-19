@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Flag Checker</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/signin.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form id="form" method="post" action="">
+        <h2 class="form-signin-heading">Submit your flag here to validate:</h2>
+        <br />
+        <label for="inputFlag" class="sr-only">Flag</label>
+        <input type="text" id="inputFlag" class="form-control" placeholder="WHITEHACKS{}" name="flag" required autofocus>
+        <br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="submitBtn">Check</button>
+      </form>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="assets/js/underscore-min.js"></script>
+    <script>
+      var XORCipher={encode:function(e,t){return b64_encode(t=xor_encrypt(e,t))},decode:function(e,t){return xor_decrypt(e,t=b64_decode(t))}},b64_table="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";function b64_encode(e){var t,n,r,a,c,o,i=0,u="";if(!e)return e;do{t=(c=e[i++]<<16|e[i++]<<8|e[i++])>>18&63,n=c>>12&63,r=c>>6&63,a=63&c,u+=b64_table.charAt(t)+b64_table.charAt(n)+b64_table.charAt(r)+b64_table.charAt(a)}while(i<e.length);return((o=e.length%3)?u.slice(0,o-3):u)+"===".slice(o||3)}function b64_decode(e){var t,n,r,a,c,o,i=0,u=[];if(!e)return e;e+="";do{t=(o=b64_table.indexOf(e.charAt(i++))<<18|b64_table.indexOf(e.charAt(i++))<<12|(a=b64_table.indexOf(e.charAt(i++)))<<6|(c=b64_table.indexOf(e.charAt(i++))))>>16&255,n=o>>8&255,r=255&o,u.push(t),64!==a&&(u.push(n),64!==c&&u.push(r))}while(i<e.length);return u}function keyCharAt(e,t){return e.charCodeAt(Math.floor(t%e.length))}function xor_encrypt(e,t){return _.map(t,function(t,n){return t.charCodeAt(0)^keyCharAt(e,n)})}function xor_decrypt(e,t){return _.map(t,function(t,n){return String.fromCharCode(t^keyCharAt(e,n))}).join("")}var flag="AAAAAAAAAAAAACwCCQIEGwIxIiMjFydkGg80BxRnCAg8IA01";function codify(){var e=document.getElementById("inputFlag").value;flag===XORCipher.encode("WHITEHACKS",e)?alert("You have found the flag!"):alert("Sorry, your flag is incorrect")}document.getElementById("form").addEventListener("submit",function(e){e.preventDefault()}),document.getElementById("submitBtn").addEventListener("click",codify);
+    </script>
+  </body>
+</html>

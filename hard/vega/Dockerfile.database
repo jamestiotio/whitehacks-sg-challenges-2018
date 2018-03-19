@@ -1,0 +1,18 @@
+FROM alpine:3.7
+
+COPY files/docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN apk --no-cache add bash mysql openssh supervisor \
+    && addgroup mysql mysql \
+    && chmod +x /docker-entrypoint.sh
+
+# Post-setup
+RUN echo "root:Hail_Mary_WhiteHacks" | chpasswd \
+    && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
+    && ssh-keygen -A \
+    && echo "WHITEHACKS{t5k_TSk_p@ssw0rd_r3uSe}" > /root/flag
+
+COPY files/supervisord.conf /etc/supervisor/supervisord.conf
+COPY docker-entrypoint-initdb.d/ /docker-entrypoint-initdb.d/
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]

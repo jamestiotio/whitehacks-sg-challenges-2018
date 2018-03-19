@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+    altair:
+        build: altair
+        ports:
+           - "8000:80"
+        restart: always
+        environment:
+            - "WP_HOST=192.168.99.100:8000"
+
+    deneb:
+        build: deneb
+        ports:
+            - "8001:80"
+        cap_add:
+            - NET_ADMIN
+        restart: always
+
+    vega:
+        build: vega
+        ports:
+            - "8002:8000"
+        networks:
+            vega-public:
+        restart: always
+        depends_on:
+            - vega-db
+            - vega-docker
+
+    vega-db:
+        build:
+            context: vega
+            dockerfile: Dockerfile.database
+        networks:
+            vega-public:
+            vega-private:
+        restart: always
+
+    vega-docker:
+        build:
+            context: vega
+            dockerfile: Dockerfile.docker
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        networks:
+            vega-private:
+        restart: always
+
+networks:
+    vega-public:
+    vega-private:

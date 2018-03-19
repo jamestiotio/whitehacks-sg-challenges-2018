@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /super-secret-admin-page/
+Disallow: /flag-2-DiFoLf7aSDLmdjJOnvTS

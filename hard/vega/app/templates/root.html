@@ -1,0 +1,45 @@
+{% extends "master.html" %}
+
+{% block menu %} 
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Gallery</a></li>
+        <!-- <li><a href="/upload">Upload</a></li> -->
+        <li><a href="/search">Search</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %} 
+<div class="container">
+  <div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    {% if is_post %}
+    <h1 class="gallery-title">Gallery Search for: @keyword@</h1>
+    {% else %}
+    <h1 class="gallery-title">Gallery</h1>
+    {% endif %}
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for (name, dim) in image_details %}
+      <tr>
+          <th>
+            <h2>{{name}}</h2>
+            <small>Dimension: {{dim[0]}} &#215; {{dim[1]}}</small>
+            <img class="img-responsive" src="./static/images/{{name}}"> 
+          </th>
+      </tr>
+      {% endfor %}   
+    </tbody>
+  </table>
+</div>
+{% endblock %}

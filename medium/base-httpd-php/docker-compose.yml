@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+    php:
+        image: whitehacksctfmedium_base-httpd-php
+        network_mode: host
+        restart: always
+        volumes:
+            - ./app:/var/www/localhost/htdocs/

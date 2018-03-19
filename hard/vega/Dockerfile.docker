@@ -1,0 +1,5 @@
+FROM alpine:3.7
+
+# Forward the mounted docker socket to port 2375 (non-HTTPS)
+RUN apk --no-cache add socat
+CMD ["socat", "-d", "-d", "TCP4-LISTEN:2375,fork,reuseaddr", "UNIX-CONNECT:/var/run/docker.sock"]
