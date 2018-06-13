@@ -17,6 +17,7 @@ Vagrant.configure("2") do |config|
     cd /CTFd
     sed -i 's/8000:8000/80:8000/g' /CTFd/docker-compose.yml
     sed -i 's/redis:4/redis:4-alpine/g' /CTFd/docker-compose.yml
+    sed -i 's/mariadb:10.2/yobasystems\/alpine-mariadb/g' /CTFd/docker-compose.yml
     echo 'AAAAAAAAAAAAAAAAAAAA' > /CTFd/.ctfd_secret_key
     docker-compose up -d
     
@@ -25,6 +26,7 @@ Vagrant.configure("2") do |config|
     docker-compose build base-httpd base-httpd-php base-supervisord-httpd-php-mysqld
     bash /vagrant/build-medium.sh
     docker-compose up -d
+    docker-compose stop base-httpd base-httpd-php base-supervisord-httpd-php-mysqld
     
     cd /vagrant/hard
     bash /vagrant/build-hard.sh
