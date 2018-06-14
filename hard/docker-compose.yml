@@ -4,7 +4,7 @@ services:
     altair:
         build: altair
         ports:
-           - "8000:80"
+            - "8000:80"
         restart: always
         environment:
             - "WP_HOST=192.168.99.100:8000"
@@ -16,6 +16,9 @@ services:
         cap_add:
             - NET_ADMIN
         restart: always
+        healthcheck:
+            test: ["CMD-SHELL", "echo > /var/log/apache2/access.log || exit 1"]
+            interval: 1m30s
 
     vega:
         build: vega
