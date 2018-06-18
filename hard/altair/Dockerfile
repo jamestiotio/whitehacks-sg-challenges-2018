@@ -25,6 +25,9 @@ RUN apk --no-cache add \
     && sed -i -r "s/define\('DB_USER', '[^']+'\);/define\('DB_USER', 'wordpress'\);/g" /var/www/localhost/htdocs/wp-config.php \
     && sed -i -r "s/define\('DB_PASSWORD', '[^']+'\);/define\('DB_PASSWORD', 'wordpress'\);/g" /var/www/localhost/htdocs/wp-config.php \
     && printf '%s\n' "g/WHITEHACKS@SG/d" a "$(curl -sL https://api.wordpress.org/secret-key/1.1/salt/)" . w | ed -s /var/www/localhost/htdocs/wp-config.php \
+    # Fixate the Site URL to http://altair:8000
+    && echo "define('WP_HOME', 'http://altair:8000');" >> /var/www/localhost/htdocs/wp-config.php \
+    && echo "define('WP_SITEURL', 'http://altair:8000');" >> /var/www/localhost/htdocs/wp-config.php \
     # Fixed HTTP 500 error during login (https://core.trac.wordpress.org/ticket/37071)
     && sed -i "s/wp_signon( '', \$secure_cookie )/wp_signon( array(), \$secure_cookie )/g" /var/www/localhost/htdocs/wp-login.php \
     # Cleanup
@@ -41,7 +44,7 @@ COPY files/flag /root/flag
 COPY files/altair.sql /docker-entrypoint-initdb.d/altair.sql
 
 EXPOSE 80
-ENV WP_HOST '127.0.0.1'
+ENV WP_HOST 'altair'
 
 COPY files/start.sh /start.sh
 RUN chmod 755 /start.sh

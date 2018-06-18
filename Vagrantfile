@@ -1,6 +1,9 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "envimation/ubuntu-xenial-docker"
   
+  config.vm.network "forwarded_port", guest: 80, host: 80
+  config.vm.network "forwarded_port", guest: 8000, host: 8000
+
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024"
     vb.cpus = 2
@@ -29,8 +32,6 @@ Vagrant.configure("2") do |config|
     
     cd /vagrant/hard
     docker-compose up -d
-    docker cp altair/setup_for_public_access.sh hard_altair_1:/setup_for_public_access.sh
-    docker exec hard_altair_1 chmod +x /setup_for_public_access.sh
     docker ps -aq | xargs docker rm 2> /dev/null
     
     echo "WHITEHACKS{V3G@_ch@1_n0_kick_l@}" > /root/flag
